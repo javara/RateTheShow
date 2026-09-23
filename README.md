@@ -64,11 +64,22 @@ cp .env.example .env
 ```
 
 ### 3. Start the Stack
+For production
+```bash
+docker compose -f ./docker-compose.prod.yml up --build
+```
+For local development
 ```bash
 docker compose up --build
 ```
 
 ### 4. Access the App
+
+For production
+- **Web Application:** [http://<public-ip-address>:28080](http://<public-ip-address>:28080)
+- **Interactive API Docs (Swagger):** [http://<public-ip-address>:28001/docs](http://<public-ip-address>:28001/docs)
+
+For local development
 - **Web Application:** [http://localhost:28080](http://localhost:28080)
 - **Interactive API Docs (Swagger):** [http://localhost:28001/docs](http://localhost:28001/docs)
 
@@ -107,5 +118,12 @@ docker exec -it ratetheshow_backend pytest -v
 
 ## 👤 Author
 
-Developed by **Javier Aran Alcaide**  
-*Full Stack Developer*
+Developed by **Gemini**  
+
+Original Idea by Marcel.Dean
+
+Original Developer Team:
+
+- 	Marcel 	as Frontend Developer – UI design, React components, API integration
+-	Javier 	as Backend Developer – REST API, Database model, Sample data
+-  	Baris 	as Cloud Engineer – Docker setup, AWS ECR/EC2/RDS deployment
