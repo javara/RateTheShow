@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push images
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPO_NAME: ratetheshow
+        run: |
+          # Build Backend
+          docker build -f docker/Dockerfile.backend -t $ECR_REGISTRY/$REPO_NAME:backend-latest .
+          docker push $ECR_REGISTRY/$REPO_NAME:backend-latest
+
+          # Build Frontend with API URL injection
+          docker build --build-arg REACT_APP_API_URL=${{ secrets.PROD_API_URL }} -f docker/Dockerfile.frontend -t $ECR_REGISTRY/$REPO_NAME:frontend-latest .
+          docker push $ECR_REGISTRY/$REPO_NAME:frontend-latest
+
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ec2-user
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            aws ecr get-login-password --region eu-central-1 | sudo docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+
+            export ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+            export REPO_NAME=ratetheshow
+            export DATABASE_URL=${{ secrets.DATABASE_URL }}
+
+            cd /home/ec2-user/app
+            sudo -E docker-compose -f docker-compose.prod.yml down --remove-orphans
+            sudo -E docker-compose -f docker-compose.prod.yml pull
+            sudo -E docker-compose -f docker-compose.prod.yml up -d

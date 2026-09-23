@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ${ECR_REGISTRY}/ratetheshow:backend-latest
+    container_name: ratetheshow_backend
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "8000:8000"
+
+  frontend:
+    image: ${ECR_REGISTRY}/ratetheshow:frontend-latest
+    container_name: ratetheshow_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
