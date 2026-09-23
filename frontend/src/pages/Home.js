@@ -69,10 +69,10 @@ function Home() {
         <div className="bannerList">
           {topShows.length > 1 &&
             topShows.slice(1).map((show, index) => (
-              <TopShowBanner 
+              <TopShowBanner
                 key={show.id}
                 show={show}
-                rank={index + 2} 
+                rank={index + 2}
               />
             ))}
           {topShows.length === 0 && !loading && !error && (
@@ -125,7 +125,7 @@ function Home() {
       <section className="section aboutSection" id="about">
         <h2 className="sectionTitle">About RateTheShow</h2>
         <p className="aboutLead">
-          <strong>RateTheShow</strong> is a modern, cloud-native full-stack application developed by <strong>Javier Aran Alcaide</strong>.
+          <strong>RateTheShow</strong> is a modern, cloud-native full-stack application developed by <strong>Javara</strong>.
         </p>
         <div className="aboutGrid">
           <div className="aboutCard">

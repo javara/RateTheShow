@@ -118,12 +118,12 @@ docker exec -it ratetheshow_backend pytest -v
 
 ## 👤 Author
 
-Developed by **Gemini**  
+Public adaptation of an internal project by Javara. 
 
-Original Idea by Marcel.Dean
+Original idea by Marcel Dean
 
-Original Developer Team:
+Original developer team:
 
-- 	Marcel 	as Frontend Developer – UI design, React components, API integration
--	Javier 	as Backend Developer – REST API, Database model, Sample data
--  	Baris 	as Cloud Engineer – Docker setup, AWS ECR/EC2/RDS deployment
+- 	Marcel Dean as Frontend Developer – UI design, React components, API integration
+-	Javara 	    as Backend Developer  – REST API, Database model, Sample data
+-  	Barış Özgün	as Cloud Engineer     – Docker setup, AWS ECR/EC2/RDS deployment
