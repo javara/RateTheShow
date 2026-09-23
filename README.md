@@ -76,8 +76,8 @@ docker compose up --build
 ### 4. Access the App
 
 For production
-- **Web Application:** [http://<public-ip-address>:28080](http://<public-ip-address>:28080)
-- **Interactive API Docs (Swagger):** [http://<public-ip-address>:28001/docs](http://<public-ip-address>:28001/docs)
+- **Web Application:** [http://%%your-AWS-public-ip-address%%:28080](http://%%your-AWS-public-ip-address%%:28080)
+- **Interactive API Docs (Swagger):** [http://%%your-AWS-public-ip-address%%:28001/docs](http://%%your-AWS-public-ip-address%%:28001/docs)
 
 For local development
 - **Web Application:** [http://localhost:28080](http://localhost:28080)
